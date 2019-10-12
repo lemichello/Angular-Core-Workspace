@@ -11,15 +11,14 @@
         <mat-list>
           <mat-list-item
             (click)="selectProject(project)"
-            *ngFor="let project of projects"
-          >
+            *ngFor="let project of projects$ | async">
             <h3 mat-line>
               {{ project.title }}
             </h3>
             <p mat-line>
               {{ project.details }}
             </p>
-            <button mat-icon-button>
+            <button mat-icon-button (click)="deleteProject(project); $event.stopImmediatePropagation()">
               <mat-icon>close</mat-icon>
             </button>
           </mat-list-item>
@@ -33,17 +32,12 @@
       <mat-card-header>
         <mat-card-title>
           <h1>
-            <span *ngIf="selectedProject; else elseBlock">{{
-              selectedProject.title
-            }}</span>
+            <span *ngIf="selectedProject; else elseBlock">{{selectedProject.title}}</span>
             <ng-template #elseBlock>Select a Project</ng-template>
           </h1>
         </mat-card-title>
       </mat-card-header>
       <form>
-        <mat-card-content>
-          <!-- PROJECT FORM HERE -->
-        </mat-card-content>
         <mat-card-actions>
           <button type="submit" mat-button color="primary">Save</button>
           <button type="button" mat-button (click)="cancel()">Cancel</button>
